@@ -207,3 +207,235 @@ SSH into the next level: **ssh** -i rsa_file bandit14@bandit.labs.overthewire.or
 
 **echo** "4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e" | nc localhost 30000  
 > BfMYroe26WYalil77FoDi9qh59eK5xNr
+##
+
+### Bandit 15
+###### The password for the next level can be retrieved by submitting the password of the current level to port 30001 using SSL encryption.
+
+**echo** "BfMYroe26WYalil77FoDi9qh59eK5xNr" | **openssl** s_client -connect localhost:30001 -ign_eof  
+* ign_eof is used to keep the connection open when the end of file is reached in the input.  
+> cluFn7wTiGryunymYOu4RcffSxQluehd
+##
+
+### Bandit 16
+###### The credentials for the next level can be retrieved by submitting the password of the current level to a port on localhost in the range 31000 to 32000.There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.  
+
+**nmap** localhost -p31000-32000 -script=ssl-enum-ciphers -sV
+
+After the scan has completed, we see that only 2/5 open ports have SSL. 
+
+```
+31518/tcp open  ssl/echo
+| ssl-enum-ciphers: 
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 1024) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       Weak certificate signature: SHA1
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 1024) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_CAMELLIA_128_CBC_SHA256 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_CAMELLIA_256_CBC_SHA384 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CCM (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CCM_8 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CCM (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CCM_8 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 1024) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       Weak certificate signature: SHA1
+|_  least strength: A
+```
+### AND  
+```
+31790/tcp open  ssl/unknown
+| fingerprint-strings: 
+|   FourOhFourRequest, GenericLines, GetRequest, HTTPOptions, Help, Kerberos, LDAPSearchReq, LPDString, RTSPRequest, SIPOptions, SSLSessionReq, TLSSessionReq: 
+|_    Wrong! Please enter the correct current password
+| ssl-enum-ciphers: 
+|   TLSv1.0: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 1024) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       Weak certificate signature: SHA1
+|   TLSv1.1: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 1024) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       Weak certificate signature: SHA1
+|   TLSv1.2: 
+|     ciphers: 
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_CAMELLIA_128_CBC_SHA256 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_CAMELLIA_256_CBC_SHA384 (rsa 1024) - A
+|       TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CBC_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CCM (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_CCM_8 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_128_GCM_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CBC_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CCM (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_CCM_8 (rsa 1024) - A
+|       TLS_RSA_WITH_AES_256_GCM_SHA384 (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_128_CBC_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA (rsa 1024) - A
+|       TLS_RSA_WITH_CAMELLIA_256_CBC_SHA256 (rsa 1024) - A
+|       TLS_RSA_WITH_SEED_CBC_SHA (rsa 1024) - A
+|     compressors: 
+|       NULL
+|     cipher preference: client
+|     warnings: 
+|       Weak certificate signature: SHA1
+|_  least strength: A
+```
+The port **31790** seems to require some kind of password.
+```
+fingerprint-strings: 
+|   FourOhFourRequest, GenericLines, GetRequest, HTTPOptions, Help, Kerberos, LDAPSearchReq, LPDString, RTSPRequest, SIPOptions, SSLSessionReq, TLSSessionReq:fingerprint-strings: 
+|   FourOhFourRequest, GenericLines, GetRequest, HTTPOptions, Help, Kerberos, LDAPSearchReq, LPDString, RTSPRequest, SIPOptions, SSLSessionReq, TLSSessionReq: 
+|_    Wrong! Please enter the correct current password
+```
+**echo** "cluFn7wTiGryunymYOu4RcffSxQluehd" | openssl s_client -connect localhost:31790 -ign_eof
+```
+Correct!
+-----BEGIN RSA PRIVATE KEY-----
+MIIEogIBAAKCAQEAvmOkuifmMg6HL2YPIOjon6iWfbp7c3jx34YkYWqUH57SUdyJ
+imZzeyGC0gtZPGujUSxiJSWI/oTqexh+cAMTSMlOJf7+BrJObArnxd9Y7YT2bRPQ
+Ja6Lzb558YW3FZl87ORiO+rW4LCDCNd2lUvLE/GL2GWyuKN0K5iCd5TbtJzEkQTu
+DSt2mcNn4rhAL+JFr56o4T6z8WWAW18BR6yGrMq7Q/kALHYW3OekePQAzL0VUYbW
+JGTi65CxbCnzc/w4+mqQyvmzpWtMAzJTzAzQxNbkR2MBGySxDLrjg0LWN6sK7wNX
+x0YVztz/zbIkPjfkU1jHS+9EbVNj+D1XFOJuaQIDAQABAoIBABagpxpM1aoLWfvD
+KHcj10nqcoBc4oE11aFYQwik7xfW+24pRNuDE6SFthOar69jp5RlLwD1NhPx3iBl
+J9nOM8OJ0VToum43UOS8YxF8WwhXriYGnc1sskbwpXOUDc9uX4+UESzH22P29ovd
+d8WErY0gPxun8pbJLmxkAtWNhpMvfe0050vk9TL5wqbu9AlbssgTcCXkMQnPw9nC
+YNN6DDP2lbcBrvgT9YCNL6C+ZKufD52yOQ9qOkwFTEQpjtF4uNtJom+asvlpmS8A
+vLY9r60wYSvmZhNqBUrj7lyCtXMIu1kkd4w7F77k+DjHoAXyxcUp1DGL51sOmama
++TOWWgECgYEA8JtPxP0GRJ+IQkX262jM3dEIkza8ky5moIwUqYdsx0NxHgRRhORT
+8c8hAuRBb2G82so8vUHk/fur85OEfc9TncnCY2crpoqsghifKLxrLgtT+qDpfZnx
+SatLdt8GfQ85yA7hnWWJ2MxF3NaeSDm75Lsm+tBbAiyc9P2jGRNtMSkCgYEAypHd
+HCctNi/FwjulhttFx/rHYKhLidZDFYeiE/v45bN4yFm8x7R/b0iE7KaszX+Exdvt
+SghaTdcG0Knyw1bpJVyusavPzpaJMjdJ6tcFhVAbAjm7enCIvGCSx+X3l5SiWg0A
+R57hJglezIiVjv3aGwHwvlZvtszK6zV6oXFAu0ECgYAbjo46T4hyP5tJi93V5HDi
+Ttiek7xRVxUl+iU7rWkGAXFpMLFteQEsRr7PJ/lemmEY5eTDAFMLy9FL2m9oQWCg
+R8VdwSk8r9FGLS+9aKcV5PI/WEKlwgXinB3OhYimtiG2Cg5JCqIZFHxD6MjEGOiu
+L8ktHMPvodBwNsSBULpG0QKBgBAplTfC1HOnWiMGOU3KPwYWt0O6CdTkmJOmL8Ni
+blh9elyZ9FsGxsgtRBXRsqXuz7wtsQAgLHxbdLq/ZJQ7YfzOKU4ZxEnabvXnvWkU
+YOdjHdSOoKvDQNWu6ucyLRAWFuISeXw9a/9p7ftpxm0TSgyvmfLF2MIAEwyzRqaM
+77pBAoGAMmjmIJdjp+Ez8duyn3ieo36yrttF5NSsJLAbxFpdlc1gvtGCWW+9Cq0b
+dxviW8+TFVEBl1O4f7HVm6EpTscdDxU+bCXWkfjuRb7Dy9GOtt9JPsX8MBTakzh3
+vBgsyi/sN3RqRBcGU40fOoZyfAMT8s1m/uYv52O6IgeuZ/ujbjY=
+-----END RSA PRIVATE KEY-----
+```
+##
+
+### Bandit 17
+###### The password is in passwords.new and is the only line that has been changed between passwords.old and passwords.new.
+
+**diff** -n passwords.old passwords.new
+>kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd
+##
+
+### Bandit 18
+###### Unfortunately, someone has modified .bashrc to log you out when you log in with SSH.  
+
+We can't connect to this level, but we have access to Bandit 18's home directory as Bandit 17.    
+If we list the files inside Bandit 18's home directory, there's a readme that we don't have permission to read as bandit 17.  
+
+**ssh** bandit18@bandit.labs.overthewire.org -p 2220 "cat ~/readme"  
+> IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x
+##
+
+### Bandit 19
+###### To gain access to the next level, you should use the setuid binary in the homedirectory. 
+
+We have no clue what this binary is doing.  
+The source code seems to be encrypted but we have some important information mixed up with the nonsense.  
+```
+�����[�Run a command as another user.
+```
+
+**./bandit20-do** cat /etc/bandit_pass/bandit20
+> GbKksEFF4yrVs6il55v6gwY5aVje5f0j
+##
+
+### Bandit 20
+###### There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
+
+Connect twice to the machine. On the first terminal, start a netcat listener on any port.  
+**nc** -lvp [port]  
+
+On the secound terminal, run the script on the same port.     
+
+After the connection is established, type the current level password in netcat.
+> gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr
+
+##
+
