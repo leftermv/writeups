@@ -100,3 +100,21 @@ Only the file -file07 has ASCII text.
 
 **cat** data.txt | **tr** 'A-Za-z' 'N-ZA-Mn-za-m'  
 > The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
+##
+
+### Bandit 12
+###### The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed.  
+
+We revert the data.txt back into binary.  
+**xxd** -r data.txt data_reverted.txt  
+
+Using **file** command, we check the file format of data_reverted.txt, which is a .gzip compressed data.  
+We'll convert each file to the right format and extract its content by using **mv** [file] [file.NewFormat]  
+
+* For gzip, I used **gzip** -d [filename.gz] to extract the data.  
+* For bzip2, I used **bzip2** -d [filename.bz2] to extract the data.  
+* For tar, I used **tar** -xf [filename.tar] to extract the data.  
+
+**Steps**: txt &#8594; binary &#8594; .gz &#8594; .bz2 &#8594; .gz &#8594; .tar &#8594; .tar &#8594; .bz2 &#8594; .tar &#8594; .gz ==> TXT.  
+
+> The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
