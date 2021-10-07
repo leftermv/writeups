@@ -105,6 +105,46 @@ Only the file -file07 has ASCII text.
 ### Bandit 12
 ###### The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed.  
 
+```
+00000000: 1f8b 0808 0650 b45e 0203 6461 7461 322e  .....P.^..data2.
+00000010: 6269 6e00 013d 02c2 fd42 5a68 3931 4159  bin..=...BZh91AY
+00000020: 2653 598e 4f1c c800 001e 7fff fbf9 7fda  &SY.O...........
+00000030: 9e7f 4f76 9fcf fe7d 3fff f67d abde 5e9f  ..Ov...}?..}..^.
+00000040: f3fe 9fbf f6f1 feee bfdf a3ff b001 3b1b  ..............;.
+00000050: 5481 a1a0 1ea0 1a34 d0d0 001a 68d3 4683  T......4....h.F.
+00000060: 4680 0680 0034 1918 4c4d 190c 4000 0001  F....4..LM..@...
+00000070: a000 c87a 81a3 464d a8d3 43c5 1068 0346  ...z..FM..C..h.F
+00000080: 8343 40d0 3400 0340 66a6 8068 0cd4 f500  .C@.4..@f..h....
+00000090: 69ea 6800 0f50 68f2 4d00 680d 06ca 0190  i.h..Ph.M.h.....
+000000a0: 0000 69a1 a1a0 1ea0 194d 340d 1ea1 b280  ..i......M4.....
+000000b0: f500 3406 2340 034d 3400 0000 3403 d400  ..4.#@.M4...4...
+000000c0: 1a07 a832 3400 f51a 0003 43d4 0068 0d34  ...24.....C..h.4
+000000d0: 6868 f51a 3d43 2580 3e58 061a 2c89 6bf3  hh..=C%.>X..,.k.
+000000e0: 0163 08ab dc31 91cd 1747 599b e401 0b06  .c...1...GY.....
+000000f0: a8b1 7255 a3b2 9cf9 75cc f106 941b 347a  ..rU....u.....4z
+00000100: d616 55cc 2ef2 9d46 e7d1 3050 b5fb 76eb  ..U....F..0P..v.
+00000110: 01f8 60c1 2201 33f0 0de0 4aa6 ec8c 914f  ..`.".3...J....O
+00000120: cf8a aed5 7b52 4270 8d51 6978 c159 8b5a  ....{RBp.Qix.Y.Z
+00000130: 2164 fb1f c26a 8d28 b414 e690 bfdd b3e1  !d...j.(........
+00000140: f414 2f9e d041 c523 b641 ac08 0c0b 06f5  ../..A.#.A......
+00000150: dd64 b862 1158 3f9e 897a 8cae 32b0 1fb7  .d.b.X?..z..2...
+00000160: 3c82 af41 20fd 6e7d 0a35 2833 41bd de0c  <..A .n}.5(3A...
+00000170: 774f ae52 a1ac 0fb2 8c36 ef58 537b f30a  wO.R.....6.XS{..
+00000180: 1510 cab5 cb51 4231 95a4 d045 b95c ea09  .....QB1...E.\..
+00000190: 9fa0 4d33 ba43 22c9 b5be d0ea eeb7 ec85  ..M3.C".........
+000001a0: 59fc 8bf1 97a0 87a5 0df0 7acd d555 fc11  Y.........z..U..
+000001b0: 223f fdc6 2be3 e809 c974 271a 920e acbc  "?..+....t'.....
+000001c0: 0de1 f1a6 393f 4cf5 50eb 7942 86c3 3d7a  ....9?L.P.yB..=z
+000001d0: fe6d 173f a84c bb4e 742a fc37 7b71 508a  .m.?.L.Nt*.7{qP.
+000001e0: a2cc 9cf1 2522 8a77 39f2 716d 34f9 8620  ....%".w9.qm4.. 
+000001f0: 4e33 ca36 eec0 cd4b b3e8 48e4 8b91 5bea  N3.6...K..H...[.
+00000200: 01bf 7d21 0b64 82c0 3341 3424 e98b 4d7e  ..}!.d..3A4$..M~
+00000210: c95c 1b1f cac9 a04a 1988 43b2 6b55 c6a6  .\.....J..C.kU..
+00000220: 075c 1eb4 8ecf 5cdf 4653 064e 84da 263d  .\....\.FS.N..&=
+00000230: b15b bcea 7109 5c29 c524 3afc d715 4894  .[..q.\).$:...H.
+00000240: 7426 072f fc28 ab05 9603 b3fc 5dc9 14e1  t&./.(......]...
+00000250: 4242 393c 7320 98f7 681d 3d02 0000       BB9<s ..h.=...
+```  
 We revert the data.txt back into binary.  
 **xxd** -r data.txt data_reverted.txt  
 
@@ -116,5 +156,54 @@ We'll convert each file to the right format and extract its content by using **m
 * For tar, I used **tar** -xf [filename.tar] to extract the data.  
 
 **Steps**: txt &#8594; binary &#8594; .gz &#8594; .bz2 &#8594; .gz &#8594; .tar &#8594; .tar &#8594; .bz2 &#8594; .tar &#8594; .gz ==> TXT.  
-
 > The password is 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL
+##
+
+### Bandit 13
+###### The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14.  
+###### For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level.   
+
+```
+-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAxkkOE83W2cOT7IWhFc9aPaaQmQDdgzuXCv+ppZHa++buSkN+
+gg0tcr7Fw8NLGa5+Uzec2rEg0WmeevB13AIoYp0MZyETq46t+jk9puNwZwIt9XgB
+ZufGtZEwWbFWw/vVLNwOXBe4UWStGRWzgPpEeSv5Tb1VjLZIBdGphTIK22Amz6Zb
+ThMsiMnyJafEwJ/T8PQO3myS91vUHEuoOMAzoUID4kN0MEZ3+XahyK0HJVq68KsV
+ObefXG1vvA3GAJ29kxJaqvRfgYnqZryWN7w3CHjNU4c/2Jkp+n8L0SnxaNA+WYA7
+jiPyTF0is8uzMlYQ4l1Lzh/8/MpvhCQF8r22dwIDAQABAoIBAQC6dWBjhyEOzjeA
+J3j/RWmap9M5zfJ/wb2bfidNpwbB8rsJ4sZIDZQ7XuIh4LfygoAQSS+bBw3RXvzE
+pvJt3SmU8hIDuLsCjL1VnBY5pY7Bju8g8aR/3FyjyNAqx/TLfzlLYfOu7i9Jet67
+xAh0tONG/u8FB5I3LAI2Vp6OviwvdWeC4nOxCthldpuPKNLA8rmMMVRTKQ+7T2VS
+nXmwYckKUcUgzoVSpiNZaS0zUDypdpy2+tRH3MQa5kqN1YKjvF8RC47woOYCktsD
+o3FFpGNFec9Taa3Msy+DfQQhHKZFKIL3bJDONtmrVvtYK40/yeU4aZ/HA2DQzwhe
+ol1AfiEhAoGBAOnVjosBkm7sblK+n4IEwPxs8sOmhPnTDUy5WGrpSCrXOmsVIBUf
+laL3ZGLx3xCIwtCnEucB9DvN2HZkupc/h6hTKUYLqXuyLD8njTrbRhLgbC9QrKrS
+M1F2fSTxVqPtZDlDMwjNR04xHA/fKh8bXXyTMqOHNJTHHNhbh3McdURjAoGBANkU
+1hqfnw7+aXncJ9bjysr1ZWbqOE5Nd8AFgfwaKuGTTVX2NsUQnCMWdOp+wFak40JH
+PKWkJNdBG+ex0H9JNQsTK3X5PBMAS8AfX0GrKeuwKWA6erytVTqjOfLYcdp5+z9s
+8DtVCxDuVsM+i4X8UqIGOlvGbtKEVokHPFXP1q/dAoGAcHg5YX7WEehCgCYTzpO+
+xysX8ScM2qS6xuZ3MqUWAxUWkh7NGZvhe0sGy9iOdANzwKw7mUUFViaCMR/t54W1
+GC83sOs3D7n5Mj8x3NdO8xFit7dT9a245TvaoYQ7KgmqpSg/ScKCw4c3eiLava+J
+3btnJeSIU+8ZXq9XjPRpKwUCgYA7z6LiOQKxNeXH3qHXcnHok855maUj5fJNpPbY
+iDkyZ8ySF8GlcFsky8Yw6fWCqfG3zDrohJ5l9JmEsBh7SadkwsZhvecQcS9t4vby
+9/8X4jS0P8ibfcKS4nBP+dT81kkkg5Z5MohXBORA7VWx+ACohcDEkprsQ+w32xeD
+qT1EvQKBgQDKm8ws2ByvSUVs9GjTilCajFqLJ0eVYzRPaY6f++Gv/UVfAPV4c+S0
+kAWpXbv5tbkkzbS0eaLPTKgLzavXtQoTtKwrjpolHKIHUz6Wu+n4abfAIRFubOdN
+/+aLoRQ0yBDRbdXMsZN/jvY44eM+xRLdRVyMmdPtP8belRi2E2aEzA==
+-----END RSA PRIVATE KEY-----
+```
+
+Copy the RSA private key from the remote machine to the attacking machine.  
+
+**chmod** 600 rsa_file &#8594; set the read & write permission for the owner of the file.  
+
+SSH into the next level: **ssh** -i rsa_file bandit14@bandit.labs.overthewire.org -p 2220.  
+
+> Content of /etc/bandit_pass/bandit14: 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e  
+##
+
+### Bandit 14
+###### The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.  
+
+**echo** "4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e" | nc localhost 30000  
+> BfMYroe26WYalil77FoDi9qh59eK5xNr
