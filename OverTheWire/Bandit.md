@@ -93,4 +93,10 @@ Only the file -file07 has ASCII text.
 
 **base64** -d data.txt 
 > The password is IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR
+##
 
+### Bandit 11
+###### The password for the next level is stored in the file data.txt, where all letters(A-Za-z) have been rotated by 13 positions.  
+
+**cat** data.txt | **tr** 'A-Za-z' 'N-ZA-Mn-za-m'  
+> The password is 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu
