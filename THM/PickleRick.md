@@ -30,7 +30,7 @@ There we find a command panel, the other links being unavaible. Using the **ls**
 >index.html  
 >login.php  
 >portal.php  
->robots.txt  
+>robots.txt   
 
 The downside is that the **cat** command is disabled.  
 
