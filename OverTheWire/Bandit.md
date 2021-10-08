@@ -439,3 +439,128 @@ After the connection is established, type the current level password in netcat.
 
 ##
 
+### Bandit 21
+###### Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+**cat** /etc/cron.d/cronjob_bandit22
+```
+@reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+* * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
+```
+
+**cat** /usr/bin/cronjob_bandit22.sh
+```
+#!/bin/bash
+chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+```
+**cat** /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
+> Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
+##
+
+### Bandit 22
+######  Look in /etc/cron.d/ for the configuration and see what command is being executed.
+
+**cat** /usr/bin/cronjob_bandit23.sh
+```
+#!/bin/bash
+
+myname=$(whoami)
+mytarget=$(echo I am user $myname | md5sum | cut -d ' ' -f 1)
+
+echo "Copying passwordfile /etc/bandit_pass/$myname to /tmp/$mytarget"
+
+cat /etc/bandit_pass/$myname > /tmp/$mytarget
+```
+
+We see that this simple bash script is using md5 to encrypt a string.  
+Each string in the format of "I am user [name]" is encrypted and a 128-bit hash value is generated.  
+Then, the user's password is copied to a file located in /tmp/ and named after the generated hash value (/tmp/HashGeneratedValue)  
+
+**echo** "I am user bandit22" | md5sum | cut -d ' ' -f 1 generates the 8169b67bd894ddbb4412f91573b38db3 hash value.  
+**cat** /tmp/8169b67bd894ddbb4412f91573b38db3  
+> Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI - the password of the current level.   
+
+We can find the password of user bandit23 using the same method as above.
+> jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
+##
+
+### Bandit 23
+###### Look in /etc/cron.d/ for the configuration and see what command is being executed.  
+```
+#!/bin/bash
+
+myname=$(whoami)
+
+cd /var/spool/$myname
+echo "Executing and deleting all scripts in /var/spool/$myname:"
+for i in * .*;
+do
+    if [ "$i" != "." -a "$i" != ".." ];
+    then
+        echo "Handling $i"
+        owner="$(stat --format "%U" ./$i)"
+        if [ "${owner}" = "bandit23" ]; then
+            timeout -s 9 60 ./$i
+        fi
+        rm -f ./$i
+    fi
+done
+```
+From the script above we see that every script located in /var/spool/username will be executed and deleted after 60 seconds.  
+
+We can create a simple bash script to copy the password from /etc/bandit_pass/bandit24 to another file.  
+
+I created a directory inside /tmp/ and made two files.  
+* The first file I created was called script.sh and is a simple bash script.  
+```
+#!/bin/bash
+
+cat /etc/bandit_pass/bandit24 > /tmp/blablablatemp/pass
+```
+* The second file I created is an empty file where the password will be written.  
+
+I set the **pass** file **read** and **write** permissions. (Couldn't get it working with only write permission.)  
+I set full permissions for the **script.sh** file.  
+
+Copy the script from the /tmp directory to **/var/spool/bandit24**.  
+
+After the script is executed, we get the password for the next level. 
+
+> UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ
+
+**Note**: You can get the password for Bandit 24 while still in Bandit 22 level, by using the same method described there.  
+It doesn't seems to work for other levels. 
+
+### Bandit 24
+###### A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations.
+
+I tried creating a bash script to generate the "password code" string & send it right away, 10.000 times.  
+It was too fast for the daemon to keep up even with 1s sleep time. That would be more than 2.77 hours.  
+
+So I created a bash script to generate a list of "password code" strings and then read from that list via netcat.  
+
+Bash script:
+```
+#!/bin/bash
+
+for i in {0000..9999}
+do
+    echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ $i" >> password_list.txt
+done
+```
+The password_list.txt is looking like this:
+```
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 0000
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 0001
+.....
+UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9999
+```
+
+**cat** password_list.txt | **nc** localhost 30002
+
+After a few seconds and errors because of the wrong pincode, we get our password.  
+> The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+##
+
+
