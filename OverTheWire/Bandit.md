@@ -565,7 +565,7 @@ After a few seconds and errors because of the wrong pincode, we get our password
 ##
 
 ### Bandit 25
-###### 
+###### The shell for user bandit26 is not /bin/bash, but somethipng else. Find out what it is, how it works and how to break out of it.
 ```
 -----BEGIN RSA PRIVATE KEY-----
 MIIEpQIBAAKCAQEApis2AuoooEqeYWamtwX2k5z9uU1Afl2F8VyXQqbv/LTrIwdW
@@ -595,4 +595,152 @@ euPeaxUCgYEAntklXwBbokgdDup/u/3ms5Lb/bm22zDOCg2HrlWQCqKEkWkAO6R5
 IZdtF5HXs2S5CADTwniUS5mX1HO9l5gUkk+h0cH5JnPtsMCnAUM+BRY=
 -----END RSA PRIVATE KEY-----
 ```
+
+Since we can't connect to Bandit 26 just yet, we go back to Bandit 25.  
+By looking at the **/etc/passwd/** file, we see that the bandit 26 has **/usr/bin/showtext** set instead of the bash shell.  
+
+**cat** /usr/bin/showtext  
+```
+#!/bin/sh
+
+export TERM=linux
+
+more ~/text.txt
+exit 0
+```
+
+We can't read the text file but we know that **more** gets called.  
+By minimizing the terminal when we try to log via SSH, it'll trigger the more command since the entire logo can't be displayed.  
+
+Then, we can open **vim** by typing **v**. After that, we can enter the **:set shell=/bin/bash** command.  
+Once we have our bash shell, we can use **:!cat /etc/bandit_pass/bandit26**.   
+> 5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z  
 ##
+
+### Bandit 26
+###### Good job getting a shell! Now hurry and grab the password for bandit27!
+
+We still can't log in to bandit 26.   
+We go back and repeat the steps from the previous level.  
+
+**:!ls -la** 
+```
+-rwsr-x---  1 bandit27 bandit26 7296 May  7  2020 bandit27-do
+```
+
+We do have reand and execute access to a binary called bandit27-do. We might assume what this is doing from previous experience.  
+
+**:!/home/bandit26/bandit27-do** cat /etc/bandit_pass/bandit27
+> 3ba3118a22e93127a4ed485be72ef5ea
+##
+
+### Bandit 27
+###### There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo. Clone the repository and find the password for the next level.
+
+Create a directory inside of /tmp because we don't have write access in our home directory.  
+
+**git** clone ssh://bandit27-git@localhost/home/bandit27-git/repo  
+
+> 0ef186ac70e04ea33b4c1853d2526fa2
+##
+
+### Bandit 28
+###### There is a git repository at ssh://bandit29-git@localhost/home/bandit29-git/repo. Clone the repository and find the password for the next level.
+
+**cat** README.md
+```
+## credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+```
+
+We can use the **git log** to see the logs of the git repository.  
+We have one interesting log that caught my attention.  
+```
+commit edd935d60906b33f0619605abd1689808ccdd5ee
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:49 2020 +0200
+
+    fix info leak
+```
+
+**git log -p** shows the logs with the differences made after each commit.
+```
+commit edd935d60906b33f0619605abd1689808ccdd5ee
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:49 2020 +0200
+
+    fix info leak
+
+diff --git a/README.md b/README.md
+index 3f7cee8..5c6457b 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for level29 of bandit.
+ ## credentials
+ 
+ - username: bandit29
+-- password: bbc96594b4e001778eee9975372716b2
++- password: xxxxxxxxxx
+```
+
+> bbc96594b4e001778eee9975372716b2
+##
+
+### Bandit 29
+###### There is a git repository at ssh://bandit29-git@localhost/home/bandit29-git/repo. Clone the repository and find the password for the next level.
+
+Here, **git log -p** doesn't seem to offer us much information at first.  
+We can check the current branch of the repository by using **git branch**.  
+
+```
+* master
+```
+
+Using **git branch -a** will show the other branches as well. 
+We use **git checkout [branch]** to check the other brancahes.  
+
+```
+* master
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/dev
+  remotes/origin/master
+  remotes/origin/sploits-dev
+```
+
+Finally, in /remotes/origin/dev, if we cheeck the logs we find the password.  
+
+```
+commit bc833286fca18a3948aec989f7025e23ffc16c07
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:52 2020 +0200
+
+    add data needed for development
+
+diff --git a/README.md b/README.md
+index 1af21d3..39b87a8 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for bandit30 of bandit.
+ ## credentials
+ 
+ - username: bandit30
+-- password: <no passwords in production!>
++- password: 5b90576bedb2cc04c86a9e924ce42faf
+```
+> 5b90576bedb2cc04c86a9e924ce42faf
+##
+
+### Bandit 30
+###### There is a git repository at ssh://bandit30-git@localhost/home/bandit30-git/repo. Clone the repository and find the password for the next level.
+
+**cd** .git   
+Finally, inside **packet-refs** we have an interesting file.
+```
+f17132340e8ee6c159e0a4a6bc6f80e1da3b1aea refs/tags/secret
+```
+
+**git** show f17132340e8ee6c159e0a4a6bc6f80e1da3b1aea
+
+> 47e603bb428404d265f59c42920d81e5
