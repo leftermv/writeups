@@ -744,3 +744,62 @@ f17132340e8ee6c159e0a4a6bc6f80e1da3b1aea refs/tags/secret
 **git** show f17132340e8ee6c159e0a4a6bc6f80e1da3b1aea
 
 > 47e603bb428404d265f59c42920d81e5
+##
+
+### Bandit 31
+###### There is a git repository at ssh://bandit31-git@localhost/home/bandit31-git/repo. Clone the repository and find the password for the next level.  
+
+```
+This time your task is to push a file to the remote repository.
+
+Details:
+    File name: key.txt
+    Content: 'May I come in?'
+    Branch: master
+```
+
+Create a file and add the required text.  
+**git** add file.txt  
+
+We can't add it because the **.gitignore** file doesn't allow us to upload .txt files.  
+We can remove / edit the **.gitignore** file and add the file.txt again.  
+
+**git** commit  
+**git** push origin master  
+
+```
+Counting objects: 3, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 315 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+remote: ### Attempting to validate files... ####
+remote: 
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote: 
+remote: Well done! Here is the password for the next level:
+remote: 56a9bf19c63d650ce78e6ec0354ee45e
+remote: 
+remote: .oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.oOo.
+remote: 
+```
+> 56a9bf19c63d650ce78e6ec0354ee45e
+##
+
+### Bandit 32
+###### After all this git stuff its time for another escape. Good luck!
+
+It seems like an interactive shell. It converts any commannd to its uppercase (and invalid) version.  
+We can execute the shell again by using the **$0** variable.
+
+**cat** /etc/bandit_pass/bandit33
+> c9c3199ddf4121b10cf581a98d51caee
+##
+
+### Bandit 33 - Doesn't exist yet.
+
+##
+
+
+
+
