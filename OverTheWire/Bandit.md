@@ -698,7 +698,7 @@ We can check the current branch of the repository by using **git branch**.
 * master
 ```
 
-Using **git branch -a** will show the other branches as well. 
+Using **git branch -a** will show the other branches as well.  
 We use **git checkout [branch]** to check the other brancahes.  
 
 ```
