@@ -1,5 +1,3 @@
-### About the wargame 
-
 ###### SSH Credentials
 > User: leviathan0  
 > Password: leviathan0  
