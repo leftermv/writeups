@@ -531,6 +531,7 @@ After the script is executed, we get the password for the next level.
 
 **Note**: You can get the password for Bandit 24 while still in Bandit 22 level, by using the same method described there.  
 It doesn't seems to work for other levels. 
+##
 
 ### Bandit 24
 ###### A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations.
