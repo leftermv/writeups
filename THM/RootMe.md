@@ -24,7 +24,7 @@ By navigating to www-data's user home directory, we find the **user.txt** file w
 
 With no more clues at hand, I started to verify check if any files has any SUID permission set.  
 
-> find / -perm /4000
+> find / -perm /4000  
 
 After a long list of results, the **/usr/bin/python** is what I was needed.
 
@@ -33,3 +33,4 @@ According to [**GTFObins**](https://gtfobins.github.io/gtfobins/python/#suid), *
 Checking **whoami**, we see that the system is rooted, since we're under the **root** user account.  
 
 The second and final flag is located at /root/root.txt and it is **THM{pr1v1l3g3_3sc4l4t10n}**.**[2]**
+
