@@ -140,4 +140,4 @@ The flag is located on C:\Users\Administrator\Desktop.
 
 ## 
 
-**Note**: There's another way in, using metasploit but that way is more guided & well explained in the room, so no point in covering that.  
+**Note**: There's another way in, using metasploit but that way is easier, more guided & well explained in the room, so no point in covering that.  
