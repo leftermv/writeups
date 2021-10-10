@@ -1,4 +1,7 @@
+###### Hack into a Mr. Robot themed Windows machine.
 Room: https://tryhackme.com/room/steelmountain  
+##
+
 
 **sudo** nmap -sV -sS -T5 -vv xx.xx.xx.xx
 
