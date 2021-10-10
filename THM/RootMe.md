@@ -1,5 +1,7 @@
-
+###### A ctf for beginners, can you root me?
 Room: https://tryhackme.com/room/rrootme
+##
+
 
 From the nmap scan, we find that only 2 ports are open.  
 
