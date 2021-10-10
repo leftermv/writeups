@@ -83,4 +83,4 @@ Server username: NT AUTHORITY\SYSTEM
 The second and final flag is in C:\Windows\System32\config\root.txt    **[2]**
 > dff0f748678f280250f25a45b8046b4a
 ##
-**Note: This room can be exploited without the help of metasploit by uploading a static incognito.exe binary since user bruce has the impersonate privileges. Then, we can use the static binary to create a new user with administrator privileges and use RDP to access the machine. **
+**Note**: This room can be exploited without the help of metasploit by uploading a static incognito.exe binary since user bruce has the impersonate privileges. Then, we can use the static binary to create a new user with administrator privileges and use RDP to access the machine.
