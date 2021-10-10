@@ -1,4 +1,6 @@
+###### A Rick and Morty CTF. Help turn Rick back into a human!   
 Room: https://tryhackme.com/room/picklerick
+##
 
 After a scanning with nmap, we can see that ports 22 and 80 are open.  
 
