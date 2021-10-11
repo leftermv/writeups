@@ -165,4 +165,74 @@ We can do the same trick as before, but with **.* /[path]** since certains chara
 > U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK
 ##
 
+### Natas 11
+######  Cookies are protected with XOR encryption
 
+The good thing is that XOR encryption is reversible. 
+* data XOR key = encoded_data
+* data XOR encoded_data = key
+
+
+If we check the soure code, get the following information  
+* $defaultdata = array( "showpassword"=>"no", "bgcolor"=>"#ffffff");  
+* and some other info that tells us that the data is JSON encoded, XOR encripted, then Base64 encoded.  
+
+The encoded_data that we need is basically the encoded cookie we can see in our browser.  
+> ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw%3D  
+**Note:** The data has a %3D appended to it, is an equal sign used for padding in base64.  
+
+```
+<?php
+
+$ptext = json_encode(array("showpassword"=>"no", "bgcolor"=>"#ffffff"));
+$ctext = base64_decode("ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw=");
+
+function xor_encrypt($in, $k) {
+    $key = $k;
+    $text = $in;
+    $outText = '';
+
+    for($i=0;$i<strlen($text);$i++) {
+        $outText .= $text[$i] ^ $key[$i % strlen($key)];
+    }
+
+    return $outText;
+}
+
+print xor_encrypt($ptext, $ctext);
+?>
+```
+> qw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jqw8Jq
+
+The key is **qw8J**.  
+
+Now, we need to modify the script so the **showpassword** will have the **yes** value.  
+
+```
+<?php
+
+$ptext = array("showpassword"=>"yes", "bgcolor"=>"#ffffff");
+$key = "qw8J";
+
+function xor_encrypt($in, $k) {
+    $key = $k;
+    $text = $in;
+    $outText = '';
+
+    for($i=0;$i<strlen($text);$i++) {
+        $outText .= $text[$i] ^ $key[$i % strlen($key)];
+    }
+
+    return $outText;
+}
+
+print base64_encode(xor_encrypt(json_encode($ptext), $key));
+
+?>
+```
+> ClVLIh4ASCsCBE8lAxMacFMOXTlTWxooFhRXJh4FGnBTVF4sFxFeLFMK
+
+Change our cookie with the new one.  
+
+> The password for natas12 is EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3
+##
