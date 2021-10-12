@@ -1,4 +1,4 @@
-### Easy linux machine to practice your skills
+###### Easy linux machine to practice your skills
 Room: https://tryhackme.com/room/lazyadmin
 ##
 
