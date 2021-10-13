@@ -4,7 +4,7 @@ Room: https://tryhackme.com/room/overpass2hacked
 
 After downloading the **overpass2.pcapng** file, we can open it using Wireshark.  
 
-Filteringi the results using **tcp.stream eq 0** we can easily find a GET Request from **/development** directory.  
+Filtering the results using **tcp.stream eq 0** we can easily find a GET Request from **/development** directory.  
 
 ```
 GET /development/ HTTP/1.1
