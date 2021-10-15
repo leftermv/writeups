@@ -39,7 +39,10 @@ At some point, that image should appear along with the text above.
 This makes me think it has something to do with the image shown.  
 
 We can find the photo at **/var/www/files/images/**.  
-I started a python http server and downloaded the archive to my attacking machine.  
+I started a python http server and downloaded the photo to my attacking machine.  
+
+Using **steghide** we can find a zip archive embedded in the photo.    
+We can extract that with no passphrase.  
 
 **zip2john** backup.zip > hash
 **john** hash --wordlist=/usr/share/wordlists/rockyou.txt => pass1word  
