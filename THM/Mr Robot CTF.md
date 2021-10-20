@@ -61,7 +61,7 @@ Once we're logged in Elliot's account, we can go and change one of the .php's pa
 I edited the 404.php page of twentyfifteen's theme and replaced the source code with a PHP reverse shell.  
 
 I got a reverse shell under the **daemon** "user".  
-However, it was easy to escalate privileges since in /home/robot there was a raw MD5 hash that I could crack using john the ripper.  
+However, it was easy to escalate privileges since in /home/robot was a raw MD5 hash that I could crack.  
 > abcdefghijklmnopqrstuvwxyz
 
 After we're under **robot** user, we can read the **flag-2-of-3.txt** file.  
