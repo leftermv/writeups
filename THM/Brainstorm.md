@@ -2,7 +2,7 @@
 Room: https://tryhackme.com/room/brainstorm
 ##
 
-**sudo nmap** -sS -sV -T5 -vv xx.xx.xx.xxx
+**sudo nmap** -Pn -sS -sV -T5 -vv xx.xx.xx.xxx
 ```
 PORT     STATE SERVICE    REASON          VERSION
 21/tcp   open  ftp        syn-ack ttl 127 Microsoft ftpd
