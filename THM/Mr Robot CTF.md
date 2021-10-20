@@ -71,8 +71,8 @@ After we're under **robot** user, we can read the **flag-2-of-3.txt** file.
 To escalate privileges, I first took a look at what I can execute by running  
 **find** / perm +6000 2>/dev/null | grep "/bin/"
 
-I used the **nmap** located at /usr/local/bin/nmap to escalate my privileges to root.
-**nmap --interactive**
+I used the **nmap** located at /usr/local/bin/nmap to escalate my privileges to root.  
+**nmap --interactive**  
 nmap> **!sh**
 
 ```
