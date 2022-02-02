@@ -38,6 +38,6 @@ I managed to log in with bolt:boltadmin123 credentials.
 From the dashboard page we can see that the current version of Bolt running is 3.7.1  
 A RCE exploit developed for the version 3.7.0 can be found on **exploit-db** and it seems to work on 3.7.1 as well after a little bit of tweaking.  
 
-Using this exploit, we gen remote access to the target machine as root.  
+Using this exploit, we get remote access to the target machine as root.  
 
 The flag is located at **/home/flag.txt** and is **THM{wh0_d035nt_l0ve5_b0l7_r1gh7?}**  
