@@ -78,7 +78,5 @@ sudo less /etc/profile
 ```
 ##
 
-
-##
 The user flag is located in holt's home directory and is **ee11cbb19052e40b07aac0ca060c23ee**.  
 The root flag is located at /root directory and is **63a9f0ea7bb98050796b649e85481845**  
